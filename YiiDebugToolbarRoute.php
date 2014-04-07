@@ -115,8 +115,7 @@ class YiiDebugToolbarRoute extends CLogRoute
         $this->enabled = strpos(trim($route, '/'), 'debug') !== 0;
 
         $this->enabled && $this->enabled = ($this->allowIp(Yii::app()->request->userHostAddress)
-                && !Yii::app()->getRequest()->getIsAjaxRequest() && (Yii::app() instanceof CWebApplication))
-        		&& $this->checkContentTypeWhitelist();
+                && !Yii::app()->getRequest()->getIsAjaxRequest() && (Yii::app() instanceof CWebApplication));
 
         if ($this->enabled) {
             Yii::app()->attachEventHandler('onBeginRequest', array($this, 'onBeginRequest'));
@@ -190,7 +189,8 @@ class YiiDebugToolbarRoute extends CLogRoute
 
     protected function processLogs($logs)
     {
-        $this->getToolbarWidget()->run();
+        if ($this->checkContentTypeWhitelist())
+            $this->getToolbarWidget()->run();
     }
 
     private function checkContentTypeWhitelist()
