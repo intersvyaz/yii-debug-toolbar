@@ -104,6 +104,7 @@
     };
     
     $(function() {
+		$('#ydtb-toolbar').css('display', 'block');
     	YiiDebugToolbar.init();
     });
     
